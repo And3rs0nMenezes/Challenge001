@@ -9,3 +9,4 @@ app.use(router)
 app.listen(3000,() => {
     console.log("Aplicação de TS")
 });
+
