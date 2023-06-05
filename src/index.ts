@@ -7,6 +7,6 @@ app.use(express.json())
 app.use(router)
 
 app.listen(3000,() => {
-    console.log("Aplicação de TS")
+    console.log("Typescript and express application")
 });
 
