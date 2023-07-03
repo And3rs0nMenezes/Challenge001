@@ -2,15 +2,19 @@ import { Router,Request, Response } from 'express'
 import { type } from 'os';
 import { request } from 'http';
 import { createUser} from '../controllers/userController'
-
 const router = Router();
+
+//Validations
+
+import {validate} from "./middleware/handleValidation"
+import {userCreateValidation} from './middleware/userValidation';
 
 //ROUTES//
 
 export default router 
-router.get("/test",(req:Request, res:Response) => {
+router.get("/",(req:Request, res:Response) => {
  res.status(200).send(`API Working!`);
-}).post("/User",createUser);
+}).post("/User",userCreateValidation(),validate , createUser);
 
 // //route - tutor GET
 // router.get("/tutors", (req: Request, res: Response) => {
