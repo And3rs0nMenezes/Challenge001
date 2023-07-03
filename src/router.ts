@@ -1,53 +1,35 @@
 import { Router,Request, Response } from 'express'
 import { type } from 'os';
 import { request } from 'http';
-import { createUser} from '../controllers/userController'
+import { createTutor, findTutorById , getAllTutors, deleteTutor, updateTutor } from '../controllers/tutorCrontroller';
+import { createPet , updatePet , deletePet} from '../controllers/petController';
 const router = Router();
 
 //Validations
 
 import {validate} from "./middleware/handleValidation"
-import {userCreateValidation} from './middleware/userValidation';
+import { userCreateValidation } from './middleware/userValidation';
+import { tutorCreateValidation} from './middleware/tutorValidation';
+import {petCreateValidation } from './middleware/petValidation';
 
 //ROUTES//
 
 export default router 
 router.get("/",(req:Request, res:Response) => {
  res.status(200).send(`API Working!`);
-}).post("/User",userCreateValidation(),validate , createUser);
+})
+// .post("/User",userCreateValidation(),validate)
 
-// //route - tutor GET
-// router.get("/tutors", (req: Request, res: Response) => {
+//routes - Tutor
 
-// })
-// //route - auth POST
-// router.get("/auth", (req: Request, res: Response) => {
+.post("/tutor",tutorCreateValidation(),validate,createTutor)
+.get("/tutor/:id",findTutorById)
+.get("/tutors",getAllTutors)
+.delete("/tutor/:id",deleteTutor)
+.put("/tutor/:id",tutorCreateValidation(),validate, updateTutor)
 
-// })
+//route - Pets
 
-// //route - tutor POST
-
-// router.post("/tutor", (req: Request, res: Response) => {
-
-// });
-
-// //route - tutor PUT
-// router.put("/tutor/:id", (req: Request, res: Response) => {
-
-
-// });
-// //route - tutor DELETE
-// router.delete("/tutor/:id", (req: Request, res: Response) => {
-
-// });
-// //route - pet POST
-// router.post("/pet/:tutorId", (req: Request, res: Response) => {
-
-// });
-// //route - pet PUT
-// router.put("/pet/:petId/tutor/:tutorId", (req: Request, res: Response) => {
-  
-// });
-// //route - pet DELETE
-// router.delete("/pet/:petId/tutor/:tutorId", (req: Request, res: Response) => {
-// });
+.post("/pet/:tutorId",petCreateValidation(),validate,createPet)
+.put("/pet/:petId/tutor/:tutorId",validate, updatePet)
+.delete("/pet/:petId/tutor/:tutorId",deletePet);
