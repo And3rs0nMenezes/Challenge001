@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+const bcrypt = require('bcrypt');
 
 const petSchema = new Schema(
   {
@@ -30,5 +31,12 @@ const tutorSchema = new Schema(
     timestamps: true
   }
 );
+
+tutorSchema.pre("save",async function (next){
+  this.password = await bcrypt.hash(this.password,10);
+  next();
+  
+  });
+
 export const PetModel = model("Pet", petSchema);
 export const TutorModel = model("Tutor", tutorSchema);
