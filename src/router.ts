@@ -3,12 +3,12 @@ import { type } from 'os';
 import { request } from 'http';
 import { createTutor, findTutorById , getAllTutors, deleteTutor, updateTutor } from '../controllers/tutorCrontroller';
 import { createPet , updatePet , deletePet} from '../controllers/petController';
+import { createUser } from '../controllers/userController';
 const router = Router();
 
 //Validations
 
 import {validate} from "./middleware/handleValidation"
-import { userCreateValidation } from './middleware/userValidation';
 import { tutorCreateValidation} from './middleware/tutorValidation';
 import {petCreateValidation } from './middleware/petValidation';
 
@@ -18,11 +18,12 @@ export default router
 router.get("/",(req:Request, res:Response) => {
  res.status(200).send(`API Working!`);
 })
-// .post("/User",userCreateValidation(),validate)
+
 
 //routes - Tutor
 
 .post("/tutor",tutorCreateValidation(),validate,createTutor)
+.post("/auth",createUser)
 .get("/tutor/:id",findTutorById)
 .get("/tutors",getAllTutors)
 .delete("/tutor/:id",deleteTutor)

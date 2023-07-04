@@ -18,7 +18,8 @@ const tutorSchema = new Schema(
     name: { type: String },
     password: { type: String },
     phone: { type: String },
-    email: { type: String },
+    email: { type: String ,
+    unique: true},
     date_of_birth: { type: String },
     zip_code: { type: String },
     pets: {

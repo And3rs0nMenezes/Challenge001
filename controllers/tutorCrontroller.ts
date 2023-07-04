@@ -10,7 +10,7 @@ export async function createTutor(req:Request,res:Response){
         return res.status(201).json(tutor);
     } catch (e) {
         console.log(`${e}`);
-        return res.status(500).json({error:`try later`});
+        return res.status(500).json({error:`Try later`});
         
     }
 }
@@ -29,7 +29,7 @@ export async function findTutorById(req:Request,res:Response) {
 
     } catch (e:any) {
         console.log(`${e}`);
-        return res.status(500).json({error:`try later.`});
+        return res.status(500).json({error:`Try later.`});
         
     }
     
@@ -44,7 +44,7 @@ export async function getAllTutors(req:Request,res:Response) {
         
     } catch (e:any) {
         console.log(`${e}`);
-        return res.status(500).json({error:`try later.`});
+        return res.status(500).json({error:`Try later.`});
         
     }
 }
@@ -59,12 +59,16 @@ export async function deleteTutor(req:Request,res:Response) {
         if(!tutor) {
             return res.status(404).json({error:`Tutor does not exist`})
         }
+        if (tutor.pets.length > 0) {
+            return res.status(404).json({error:`Tutor have an pet delete this first`})
+        }
+
         await tutor.deleteOne()
         return res.status(202).json({msg:`Tutor deleted`})
         
     } catch (e:any) {
         Logger.error(`${e}`);
-        return res.status(500).json({error:`try later.`});
+        return res.status(500).json({error:`Try later.`});
         
     }
     
@@ -83,6 +87,6 @@ export async function updateTutor(req: Request, res: Response) {
         return res.status(200).json(tutor);
     } catch (e: any) {
         Logger.error(`${e}`);
-        return res.status(500).json({ error: `try later.` });
+        return res.status(500).json({ error: `Try later.` });
     }
 }
